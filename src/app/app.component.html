@@ -16,7 +16,10 @@
       <input name="search-string" id="search-string" class="form-control" type="text" [(ngModel)]="searchString" />
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" type="submit">Search</button>
+      <button [disabled]="busy" class="btn btn-primary" type="submit">
+        Search
+        <span *ngIf="busy" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
     </div>
   </form>
 

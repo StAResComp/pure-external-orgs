@@ -14,17 +14,23 @@ export class AppComponent {
   public apiKey = '';
   public searchString = '';
   public results?: any = null;
+  public busy = false;
 
   constructor(private pureService: PureService){}
 
   public search(): void {
+    this.busy = true;
     this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
     this.pureService.extOrgSearch(this.searchString).subscribe(
       (response) => {
         this.results = response.items;
         console.log(this.results);
+        this.busy = false;
       },
-      (error) => { console.log(error); }
+      (error) => {
+        console.log(error);
+        this.busy = false;
+      }
     );
   }
 
