@@ -20,7 +20,10 @@ export class AppComponent {
   public search(): void {
     this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
     this.pureService.extOrgSearch(this.searchString).subscribe(
-      (response) => { this.results = response; console.log(this.results); },
+      (response) => {
+        this.results = response.items;
+        console.log(this.results);
+      },
       (error) => { console.log(error); }
     );
   }

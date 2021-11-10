@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Pure } from './pure.model';
+import { Pure, PureResponse } from './pure.model';
 import { EMPTY  } from 'rxjs'
 
 @Injectable({
@@ -18,7 +18,7 @@ export class PureService {
 
   private post(body: Object, endpoint: URL) {
     if (this.pure) {
-      return this.http.post(endpoint.href, body, {
+      return this.http.post<PureResponse>(endpoint.href, body, {
         headers: this.headers.set('api-key', this.pure.apiKey.toString())
       });
     }
