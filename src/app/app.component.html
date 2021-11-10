@@ -1,31 +1,30 @@
-<div class="container">
+<div class="container-fluid">
 
   <h1>Pure External Organizations</h1>
 
   <form (ngSubmit)="search()">
-    <div class="form-group">
-      <label for="pure-url">Pure URL:</label>
-      <input name="pure-url" id="pure-url" class="form-control" type="text" [(ngModel)]="pureUrl" />
-    </div>
-    <div class="form-group">
-      <label for="pure-url">API Key</label>
-      <input name="api-key" id="api-key" class="form-control" type="text" [(ngModel)]="apiKey" />
-    </div>
-    <div class="form-group">
-      <label for="pure-url">Query</label>
-      <input name="search-string" id="search-string" class="form-control" type="text" [(ngModel)]="searchString" />
-    </div>
-    <div class="form-group">
-      <button [disabled]="busy" class="btn btn-primary" type="submit">
-        Search
-        <span *ngIf="busy" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      </button>
+    <div class="row align-items-end">
+      <div class="form-group col">
+        <label for="pure-url">Pure URL</label>
+        <input [disabled]="busy" name="pure-url" id="pure-url" class="form-control" type="text" [(ngModel)]="pureUrl" />
+      </div>
+      <div class="form-group col">
+        <label for="pure-url">API Key</label>
+        <input [disabled]="busy" name="api-key" id="api-key" class="form-control" type="text" [(ngModel)]="apiKey" />
+      </div>
+      <div class="form-group col">
+        <label for="pure-url">Query</label>
+        <input [disabled]="busy" name="search-string" id="search-string" class="form-control" type="text" [(ngModel)]="searchString" />
+      </div>
+      <div class="form-group col">
+        <button [disabled]="busy" class="btn btn-primary" type="submit">
+          Search
+          <span *ngIf="busy" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </form>
 
-</div>
-
-<div class="container-fluid">
   <table class="table">
     <thead>
       <tr>
@@ -38,12 +37,9 @@
       <tr *ngFor="let result of results">
         <th scope="row">{{ result.pureId }}</th>
         <td>{{ result.uuid }}</td>
-        <td>{{ result.name.en_GB }}</td>
+        <td>{{ result.name?.en_GB }}</td>
       </tr>
     </tbody>
   </table>
-  <ul>
-    <li *ngFor="let result of results">{{ result.name.en_GB }}</li>
-  </ul>
 
 </div>
