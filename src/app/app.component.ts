@@ -1,6 +1,7 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, TemplateRef } from '@angular/core';
 import { Pure, ApiKey, ExternalOrganization } from './pure.model';
 import { PureService } from './pure.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,18 @@ import { PureService } from './pure.service';
 export class AppComponent {
 
   public title = 'pure-external-orgs';
-  public pureUrl = 'https://riswebtest.st-andrews.ac.uk';
+  public pureUrl = 'http://localhost:4200';
   public apiKey = '';
   public searchString = '';
   public results?: Array<ExternalOrganization> = [];
+  public target = '';
+  public focusOrg?: ExternalOrganization;
   public busy = false;
 
-  constructor(private pureService: PureService){}
+  constructor(
+    private pureService: PureService,
+    private modalService: NgbModal
+  ){}
 
   public search(): void {
     if (!this.busy) {
@@ -25,6 +31,7 @@ export class AppComponent {
       this.pureService.extOrgSearch(this.searchString).subscribe(
         (response) => {
           this.results = response.items;
+          this.focusOrg = this.results[0];
           this.busy = false;
         },
         (error) => {
@@ -33,5 +40,13 @@ export class AppComponent {
         }
       );
     }
+  }
+
+  public focusOn(pureId: number, content: TemplateRef<any>) {
+    this.focusOrg = this.results?.filter(org => org.pureId === pureId)[0];
+    this.modalService.open(
+      content,
+      {ariaLabelledBy: 'detailModalLabel', size: 'xl'}
+    );
   }
 }
