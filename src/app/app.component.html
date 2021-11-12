@@ -29,6 +29,7 @@
     <thead>
       <tr>
         <th scope="col">Target</th>
+        <th scope="col">Merge?</th>
         <th scope="col">Pure ID</th>
         <th scope="col">UUID</th>
         <th scope="col">Name</th>
@@ -39,7 +40,12 @@
       <tr *ngFor="let result of results">
         <td>
           <div class="form-check">
-            <input class="form-check-input position-static" type="radio" name="target" id="target-{{ result.pureId }}" value="{{ result.pureId }}" />
+            <input class="form-check-input position-static" type="radio" name="target" id="target-{{ result.pureId }}" [value]="result.pureId" [(ngModel)]="targetOrg" />
+          </div>
+        </td>
+        <td>
+          <div class="form-check">
+            <input class="form-check-input position-static" type="checkbox" name="merge" id="{{ result.pureId }}" [value]="result.pureId" [checked]="isOrgToBeMerged(result.pureId)" (change)="toggleToMerge(result.pureId, $event)" />
           </div>
         </td>
         <th scope="row">{{ result.pureId }}</th>

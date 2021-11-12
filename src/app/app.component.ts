@@ -15,7 +15,8 @@ export class AppComponent {
   public apiKey = '';
   public searchString = '';
   public results?: Array<ExternalOrganization> = [];
-  public target = '';
+  public targetOrg?: number = undefined;
+  public orgsToMerge: Array<number> = [];
   public focusOrg?: ExternalOrganization;
   public busy = false;
 
@@ -48,5 +49,22 @@ export class AppComponent {
       content,
       {ariaLabelledBy: 'detailModalLabel', size: 'xl'}
     );
+  }
+
+  public isOrgToBeMerged(pureId: number) {
+    return this.orgsToMerge.find(elem => elem === pureId);
+  }
+
+  public toggleToMerge(pureId: number, toMergeEvent: Event) {
+    const currentlyToBeMerged = this.isOrgToBeMerged(pureId);
+    const toMerge = (toMergeEvent.target as HTMLInputElement).checked;
+    if (toMerge && !currentlyToBeMerged) {
+      this.orgsToMerge.push(pureId);
+    }
+    else if (!toMerge && currentlyToBeMerged) {
+      this.orgsToMerge.splice(this.orgsToMerge.indexOf(pureId, 0), 1);
+    }
+    console.log(this.targetOrg);
+    console.log(this.orgsToMerge);
   }
 }
