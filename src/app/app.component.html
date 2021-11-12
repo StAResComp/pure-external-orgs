@@ -6,21 +6,31 @@
     <div class="row align-items-end">
       <div class="form-group col">
         <label for="pure-url">Pure URL</label>
-        <input [disabled]="busy" name="pure-url" id="pure-url" class="form-control" type="text" [(ngModel)]="pureUrl" />
+        <input [disabled]="loading || merging" name="pure-url" id="pure-url" class="form-control" type="text" [(ngModel)]="pureUrl" />
       </div>
       <div class="form-group col">
         <label for="pure-url">API Key</label>
-        <input [disabled]="busy" name="api-key" id="api-key" class="form-control" type="text" [(ngModel)]="apiKey" />
+        <input [disabled]="loading || merging" name="api-key" id="api-key" class="form-control" type="text" [(ngModel)]="apiKey" />
       </div>
       <div class="form-group col">
         <label for="pure-url">Query</label>
-        <input [disabled]="busy" name="search-string" id="search-string" class="form-control" type="text" [(ngModel)]="searchString" />
+        <input [disabled]="loading || merging" name="search-string" id="search-string" class="form-control" type="text" [(ngModel)]="searchString" />
       </div>
-      <div class="form-group col">
-        <button [disabled]="busy" class="btn btn-primary" type="submit">
-          Search
-          <span *ngIf="busy" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
+      <div class="col">
+        <div class="row">
+          <div class="form-group col">
+            <button [disabled]="loading || merging || !apiKey.length || !searchString.length" class="btn btn-primary" type="submit">
+              Search
+              <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="form-group col">
+            <button [disabled]="loading || merging || !targetOrg || !orgsToMerge.length" (click)="confirmMerge(mergeModal)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#mergeModal">
+              Merge
+              <span *ngIf="merging" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </form>
@@ -40,19 +50,19 @@
       <tr *ngFor="let result of results">
         <td>
           <div class="form-check">
-            <input class="form-check-input position-static" type="radio" name="target" id="target-{{ result.pureId }}" [value]="result.pureId" [(ngModel)]="targetOrg" />
+            <input class="form-check-input position-static" type="radio" name="target" id="target-{{ result.uuid }}" [value]="result.uuid" [(ngModel)]="targetOrg" />
           </div>
         </td>
         <td>
           <div class="form-check">
-            <input class="form-check-input position-static" type="checkbox" name="merge" id="{{ result.pureId }}" [value]="result.pureId" [checked]="isOrgToBeMerged(result.pureId)" (change)="toggleToMerge(result.pureId, $event)" />
+            <input class="form-check-input position-static" type="checkbox" name="merge" id="{{ result.uuid }}" [value]="result.uuid" [checked]="isOrgToBeMerged(result.uuid)" (change)="toggleToMerge(result.uuid, $event)" />
           </div>
         </td>
         <th scope="row">{{ result.pureId }}</th>
         <td>{{ result.uuid }}</td>
         <td>{{ result.name?.en_GB }}</td>
         <td>
-          <button (click)="focusOn(result.pureId, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
+          <button (click)="focusOn(result.uuid, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
             View
           </button>
         </td>
@@ -280,4 +290,41 @@
     </div>
     <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: ent.term?.en_GB, dtname: "Term"}'></ng-container>
   </dl>
+</ng-template>
+
+<ng-template #mergeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="mergeModalLabel">
+      Organizations to Merge
+    </h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h5>Target org</h5>
+    <ul *ngIf="targetOrg" class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ targetOrg }}
+        <button (click)="focusOn(targetOrg, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
+          View Details
+        </button>
+      </li>
+    </ul>
+    <h5>Orgs to merge</h5>
+    <ul class="list-group">
+      <li *ngFor="let org of orgsToMerge" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ org }}
+        <button (click)="focusOn(org, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
+          View Details
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button (click)="merge()" type="button" class="btn btn-warning" [disabled]="merging">
+      Merge
+      <span *ngIf="merging" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
 </ng-template>

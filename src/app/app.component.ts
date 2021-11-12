@@ -15,10 +15,11 @@ export class AppComponent {
   public apiKey = '';
   public searchString = '';
   public results?: Array<ExternalOrganization> = [];
-  public targetOrg?: number = undefined;
-  public orgsToMerge: Array<number> = [];
+  public targetOrg?: string = undefined;
+  public orgsToMerge: Array<string> = [];
   public focusOrg?: ExternalOrganization;
-  public busy = false;
+  public loading = false;
+  public merging = false;
 
   constructor(
     private pureService: PureService,
@@ -26,45 +27,76 @@ export class AppComponent {
   ){}
 
   public search(): void {
-    if (!this.busy) {
-      this.busy = true;
+    if (!this.loading && !this.merging) {
+      this.loading = true;
       this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
       this.pureService.extOrgSearch(this.searchString).subscribe(
         (response) => {
           this.results = response.items;
           this.focusOrg = this.results[0];
-          this.busy = false;
+          this.targetOrg = undefined;
+          this.orgsToMerge = [];
+          this.loading = false;
         },
         (error) => {
           console.log(error);
-          this.busy = false;
+          this.loading = false;
         }
       );
     }
   }
 
-  public focusOn(pureId: number, content: TemplateRef<any>) {
-    this.focusOrg = this.results?.filter(org => org.pureId === pureId)[0];
+  public focusOn(uuid: string, content: TemplateRef<any>) {
+    this.focusOrg = this.results?.filter(org => org.uuid === uuid)[0];
     this.modalService.open(
       content,
       {ariaLabelledBy: 'detailModalLabel', size: 'xl'}
     );
   }
 
-  public isOrgToBeMerged(pureId: number) {
-    return this.orgsToMerge.find(elem => elem === pureId);
+  public isOrgToBeMerged(uuid: string) {
+    return this.orgsToMerge.find(elem => elem === uuid);
   }
 
-  public toggleToMerge(pureId: number, toMergeEvent: Event) {
-    const currentlyToBeMerged = this.isOrgToBeMerged(pureId);
+  public toggleToMerge(uuid: string, toMergeEvent: Event) {
+    const currentlyToBeMerged = this.isOrgToBeMerged(uuid);
     const toMerge = (toMergeEvent.target as HTMLInputElement).checked;
     if (toMerge && !currentlyToBeMerged) {
-      this.orgsToMerge.push(pureId);
+      this.orgsToMerge.push(uuid);
     }
     else if (!toMerge && currentlyToBeMerged) {
-      this.orgsToMerge.splice(this.orgsToMerge.indexOf(pureId, 0), 1);
+      this.orgsToMerge.splice(this.orgsToMerge.indexOf(uuid, 0), 1);
     }
     console.log(this.targetOrg);
     console.log(this.orgsToMerge);
+  }
+
+  public confirmMerge(content: TemplateRef<any>) {
+    this.modalService.open(
+      content,
+      {ariaLabelledBy: 'mergeModalLabel'}
+    );
+  }
+
+  public merge() {
+    if (!this.loading && !this.merging && this.targetOrg && this.orgsToMerge.length) {
+      this.merging = true;
+      this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
+      this.pureService.extOrgMerge(this.targetOrg, this.orgsToMerge).subscribe(
+        (response) => {
+          this.results = [];
+          this.focusOrg = undefined;
+          this.targetOrg = undefined;
+          this.orgsToMerge = [];
+          this.merging = false;
+          this.modalService.dismissAll();
+          this.search();
+        },
+        (error) => {
+          console.log(error);
+          this.merging = false;
+        }
+      );
+    }
   }
 }

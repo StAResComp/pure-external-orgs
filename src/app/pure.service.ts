@@ -35,4 +35,19 @@ export class PureService {
       return EMPTY;
     }
   }
+
+  public extOrgMerge(target: string, toMerge: Array<string>) {
+    const body = {items: [{uuid: target, systemName: 'ExternalOrganization'}]};
+    for (let orgId of toMerge) {
+      if (orgId !== target) {
+        body.items.push({uuid: orgId, systemName: 'ExternalOrganization'});
+      }
+    }
+    if (this.pure) {
+      return this.post(body, this.pure.extOrgMergeUrl);
+    }
+    else {
+      return EMPTY;
+    }
+  }
 }

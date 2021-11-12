@@ -33,6 +33,7 @@ export class Pure {
   public url: URL;
   public apiPath = '/ws/api';
   public extOrgSearchEndpoint = '/external-organizations/search';
+  public extOrgMergeEndpoint = '/external-organizations/merge';
 
   public constructor(
     public apiKey: ApiKey,
@@ -47,6 +48,11 @@ export class Pure {
     return url;
   }
 
+  public get extOrgMergeUrl() {
+    const url = this.url;
+    url.pathname = '/api' + this.apiPath + this.extOrgMergeEndpoint;
+    return url;
+  }
 }
 
 interface PureItem {
