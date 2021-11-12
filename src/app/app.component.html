@@ -2,6 +2,13 @@
 
   <h1>Pure External Organizations</h1>
 
+  <ngb-alert *ngIf='success' type="success" (closed)="closeSuccessAlert()">
+    {{ success  }}
+  </ngb-alert>
+  <ngb-alert *ngIf='error' type="danger" (closed)="closeErrorAlert()">
+    {{ error  }}
+  </ngb-alert>
+
   <form (ngSubmit)="search()">
     <div class="row align-items-end">
       <div class="form-group col">

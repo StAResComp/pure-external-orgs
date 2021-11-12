@@ -1,7 +1,12 @@
 import { Component, Injectable, TemplateRef } from '@angular/core';
 import { Pure, ApiKey, ExternalOrganization } from './pure.model';
 import { PureService } from './pure.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
+interface Alert {
+  type: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -20,6 +25,8 @@ export class AppComponent {
   public focusOrg?: ExternalOrganization;
   public loading = false;
   public merging = false;
+  public success = '';
+  public error = '';
 
   constructor(
     private pureService: PureService,
@@ -33,13 +40,14 @@ export class AppComponent {
       this.pureService.extOrgSearch(this.searchString).subscribe(
         (response) => {
           this.results = response.items;
+          this.success = `Retrieved ${response.count} External Organization records from Pure`;
           this.focusOrg = this.results[0];
           this.targetOrg = undefined;
           this.orgsToMerge = [];
           this.loading = false;
         },
         (error) => {
-          console.log(error);
+          this.error = error;
           this.loading = false;
         }
       );
@@ -67,8 +75,6 @@ export class AppComponent {
     else if (!toMerge && currentlyToBeMerged) {
       this.orgsToMerge.splice(this.orgsToMerge.indexOf(uuid, 0), 1);
     }
-    console.log(this.targetOrg);
-    console.log(this.orgsToMerge);
   }
 
   public confirmMerge(content: TemplateRef<any>) {
@@ -84,6 +90,7 @@ export class AppComponent {
       this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
       this.pureService.extOrgMerge(this.targetOrg, this.orgsToMerge).subscribe(
         (response) => {
+          this.success = `Merge apparently successful`;
           this.results = [];
           this.focusOrg = undefined;
           this.targetOrg = undefined;
@@ -93,10 +100,17 @@ export class AppComponent {
           this.search();
         },
         (error) => {
-          console.log(error);
-          this.merging = false;
+          this.error = error;
         }
       );
     }
+  }
+
+  public closeSuccessAlert() {
+    this.success = '';
+  }
+
+  public closeErrorAlert() {
+    this.error = '';
   }
 }
