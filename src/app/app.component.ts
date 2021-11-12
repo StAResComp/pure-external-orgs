@@ -41,9 +41,8 @@ export class AppComponent {
         (response) => {
           this.results = response.items;
           this.success = `Retrieved ${response.count} External Organization records from Pure`;
+          this.clearSelection();
           this.focusOrg = this.results[0];
-          this.targetOrg = undefined;
-          this.orgsToMerge = [];
           this.loading = false;
         },
         (error) => {
@@ -92,9 +91,7 @@ export class AppComponent {
         (response) => {
           this.success = `Merge apparently successful`;
           this.results = [];
-          this.focusOrg = undefined;
-          this.targetOrg = undefined;
-          this.orgsToMerge = [];
+          this.clearSelection();
           this.merging = false;
           this.modalService.dismissAll();
           this.search();
@@ -112,5 +109,11 @@ export class AppComponent {
 
   public closeErrorAlert() {
     this.error = '';
+  }
+
+  public clearSelection() {
+    this.focusOrg = undefined;
+    this.targetOrg = undefined;
+    this.orgsToMerge = [];
   }
 }

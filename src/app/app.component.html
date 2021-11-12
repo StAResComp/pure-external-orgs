@@ -37,6 +37,11 @@
               <span *ngIf="merging" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
           </div>
+          <div class="form-group col">
+            <button [disabled]="!targetOrg && !orgsToMerge.length" (click)="clearSelection()" type="button" class="btn btn-outline-danger">
+              Clear
+            </button>
+          </div>
         </div>
       </div>
     </div>
