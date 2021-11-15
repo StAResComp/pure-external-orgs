@@ -16,7 +16,7 @@ interface Alert {
 export class AppComponent {
 
   public title = 'pure-external-orgs';
-  public pureUrl = 'http://localhost:4200';
+  public pureUrl = 'https://riswebtest.st-andrews.ac.uk';
   public apiKey = '';
   public searchString = '';
   public results?: Array<ExternalOrganization> = [];

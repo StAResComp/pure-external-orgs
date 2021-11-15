@@ -51,13 +51,13 @@ export class Pure {
 
   public get extOrgSearchUrl() {
     const url = this.url;
-    url.pathname = '/api' + this.apiPath + this.extOrgSearchEndpoint;
+    url.pathname = this.apiPath + this.extOrgSearchEndpoint;
     return url;
   }
 
   public get extOrgMergeUrl() {
     const url = this.url;
-    url.pathname = '/api' + this.apiPath + this.extOrgMergeEndpoint;
+    url.pathname = this.apiPath + this.extOrgMergeEndpoint;
     return url;
   }
 }
