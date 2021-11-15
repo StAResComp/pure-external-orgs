@@ -52,24 +52,24 @@ deploy-dev:
   extends: .pull_cached_node_modules
   before_script:
     - !reference [build, before_script]
-    - !reference [ssh_setup, before_script]
+    - !reference [.ssh_setup, before_script]
     - echo "$DEV_SSH_KEY" | tr -d '\r' | ssh-add -
-    - !reference [ssh_finish_config, before_script]
+    - !reference [.ssh_finish_config, before_script]
   script:
     - !reference [build, script]
     - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -r $DEV_SERVER_PATH/*'
     - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:$DEV_SERVER_PATH
   only:
-    - master
+    - $CI_DEFAULT_BRANCH
 
 # deploy-prod:
 #   stage: deploy-prod
 #   extends: .pull_cached_node_modules
 #   before_script:
 #     - !reference [build, before_script]
-#     - !reference [ssh_setup, before_script]
+#     - !reference [.ssh_setup, before_script]
 #     - echo "$PROD_SSH_KEY" | tr -d '\r' | ssh-add -
-#     - !reference [ssh_finish_config, before_script]
+#     - !reference [.ssh_finish_config, before_script]
 #   script:
 #     - !reference [build, script]
 #     - ssh -o stricthostkeychecking=no $PROD_USER@$PROD_SERVER 'rm -r $PROD_SERVER_PATH/*'
