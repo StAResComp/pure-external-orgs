@@ -57,8 +57,8 @@ deploy-dev:
     - !reference [.ssh_finish_config, before_script]
   script:
     - !reference [build, script]
-    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -r $DEV_SERVER_PATH/*'
-    - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:$DEV_SERVER_PATH
+    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -r ~/pure-external-orgs/*'
+    - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:~/pure-external-orgs
   only:
     - main
 
