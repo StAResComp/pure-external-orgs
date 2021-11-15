@@ -1,5 +1,5 @@
 import { Component, Injectable, TemplateRef } from '@angular/core';
-import { Pure, ApiKey, ExternalOrganization } from './pure.model';
+import { Pure, ExternalOrganization } from './pure.model';
 import { PureService } from './pure.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -37,7 +37,7 @@ export class AppComponent {
     if (!this.loading && !this.merging) {
       this.loading = true;
       try {
-        this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
+        this.pureService.pure = new Pure(this.apiKey, this.pureUrl);
         this.pureService.extOrgSearch(this.searchString).subscribe(
           (response) => {
             this.results = response.items;
@@ -92,7 +92,7 @@ export class AppComponent {
   public merge() {
     if (!this.loading && !this.merging && this.targetOrg && this.orgsToMerge.length) {
       this.merging = true;
-      this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
+      this.pureService.pure = new Pure(this.apiKey, this.pureUrl);
       this.pureService.extOrgMerge(this.targetOrg, this.orgsToMerge).subscribe(
         (response) => {
           this.success = `Merge apparently successful`;
@@ -133,7 +133,5 @@ export class AppComponent {
   public orgsToMergeDetails() {
     if (this.results) {
       return this.results.filter(res => this.orgsToMerge.indexOf(res.uuid) > -1);
-    }
-    return undefined;
-  }
+    } return undefined; }
 }

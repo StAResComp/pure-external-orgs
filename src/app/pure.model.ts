@@ -31,16 +31,18 @@ export class ApiKey {
 export class Pure {
 
   public url: URL;
+  public apiKey: ApiKey;
   public apiPath = '/ws/api';
   public extOrgSearchEndpoint = '/external-organizations/search';
   public extOrgMergeEndpoint = '/external-organizations/merge';
 
   public constructor(
-    public apiKey: ApiKey,
+    apiKey: string,
     urlStr = ''
   ) {
     try {
       this.url = new URL(urlStr || 'https://riswebtest.st-andrews.ac.uk');
+      this.apiKey = new ApiKey(apiKey);
     }
     catch (e) {
       throw(e);
