@@ -317,7 +317,7 @@
     <h5>Target org</h5>
     <ul *ngIf="targetOrg" class="list-group">
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ targetOrg }}
+        {{ targetOrgDetails()?.name?.en_GB }} ({{ targetOrg }})
         <button (click)="focusOn(targetOrg, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
           View Details
         </button>
@@ -325,9 +325,9 @@
     </ul>
     <h5>Orgs to merge</h5>
     <ul class="list-group">
-      <li *ngFor="let org of orgsToMerge" class="list-group-item d-flex justify-content-between align-items-center">
-        {{ org }}
-        <button (click)="focusOn(org, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
+      <li *ngFor="let org of orgsToMergeDetails()" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ org.name?.en_GB }} ({{ org.uuid }})
+        <button (click)="focusOn(org.uuid, orgDetails)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
           View Details
         </button>
       </li>

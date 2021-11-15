@@ -122,4 +122,18 @@ export class AppComponent {
     this.targetOrg = undefined;
     this.orgsToMerge = [];
   }
+
+  public targetOrgDetails() {
+    if (this.results) {
+      return this.results.filter(res => res.uuid === this.targetOrg)[0];
+    }
+    return undefined;
+  }
+
+  public orgsToMergeDetails() {
+    if (this.results) {
+      return this.results.filter(res => this.orgsToMerge.indexOf(res.uuid) > -1);
+    }
+    return undefined;
+  }
 }
