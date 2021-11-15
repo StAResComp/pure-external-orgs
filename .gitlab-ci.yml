@@ -29,7 +29,7 @@ build:
     - npm install -g @angular/cli
   script:
     - npm install
-    - ng build --prod --configuration=production --base-href /$URL_PATH/ --deploy-url /$URL_PATH/
+    - ng build --configuration=production --base-href /$URL_PATH/ --baseHref /$URL_PATH/
   after_script:
     - tar czf pure-external-orgs.tar.gz ./dist/*
   artifacts:
@@ -57,7 +57,7 @@ deploy-dev:
     - !reference [.ssh_finish_config, before_script]
   script:
     - !reference [build, script]
-    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -r ~/pure-external-orgs/*'
+    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -fr ~/pure-external-orgs/*'
     - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:~/pure-external-orgs
   only:
     - main
