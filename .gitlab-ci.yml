@@ -60,7 +60,7 @@ deploy-dev:
     - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -r $DEV_SERVER_PATH/*'
     - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:$DEV_SERVER_PATH
   only:
-    - $CI_DEFAULT_BRANCH
+    - main
 
 # deploy-prod:
 #   stage: deploy-prod
