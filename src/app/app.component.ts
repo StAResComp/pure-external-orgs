@@ -36,20 +36,26 @@ export class AppComponent {
   public search(): void {
     if (!this.loading && !this.merging) {
       this.loading = true;
-      this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
-      this.pureService.extOrgSearch(this.searchString).subscribe(
-        (response) => {
-          this.results = response.items;
-          this.success = `Retrieved ${response.count} External Organization records from Pure`;
-          this.clearSelection();
-          this.focusOrg = this.results[0];
-          this.loading = false;
-        },
-        (error) => {
-          this.error = error;
-          this.loading = false;
-        }
-      );
+      try {
+        this.pureService.pure = new Pure(new ApiKey(this.apiKey), this.pureUrl);
+        this.pureService.extOrgSearch(this.searchString).subscribe(
+          (response) => {
+            this.results = response.items;
+            this.success = `Retrieved ${response.count} External Organization records from Pure`;
+            this.clearSelection();
+            this.focusOrg = this.results[0];
+            this.loading = false;
+          },
+          (error) => {
+            this.error = error;
+            this.loading = false;
+          }
+        );
+      }
+      catch (e) {
+        this.error = (e as Error).message;
+        this.loading = false;
+      }
     }
   }
 

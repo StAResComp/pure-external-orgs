@@ -1,6 +1,6 @@
 class InvalidApiKeyError extends Error {
     constructor(m?: string) {
-        super(m || "Error: invalid API Key !");
+        super(m || "Error: that doesn't look like an API key!");
 
         // Set the prototype explicitly.
         Object.setPrototypeOf(this, InvalidApiKeyError.prototype);
@@ -39,7 +39,12 @@ export class Pure {
     public apiKey: ApiKey,
     urlStr = ''
   ) {
-    this.url = new URL(urlStr || 'https://riswebtest.st-andrews.ac.uk');
+    try {
+      this.url = new URL(urlStr || 'https://riswebtest.st-andrews.ac.uk');
+    }
+    catch (e) {
+      throw(e);
+    }
   }
 
   public get extOrgSearchUrl() {
