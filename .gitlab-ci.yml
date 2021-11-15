@@ -37,13 +37,13 @@ build:
       - pure-external-orgs.tar.gz
 
 .ssh_setup:
-  before-script:
+  before_script:
     - apt-get update -qq
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
 
 .ssh_finish_config:
-  before-script:
+  before_script:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
 
