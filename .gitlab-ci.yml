@@ -27,6 +27,8 @@ build:
   extends: .pull_cached_node_modules
   before_script:
     - npm install -g @angular/cli
+    - cp src/environments/environment.ts.template src/environments/environment.ts
+    - cp src/environments/environment.prod.ts.template src/environments/environment.prod.ts
   script:
     - npm install
     - ng build --configuration=production --base-href /$URL_PATH/ --baseHref /$URL_PATH/
@@ -57,7 +59,11 @@ deploy-dev:
     - !reference [.ssh_finish_config, before_script]
   script:
     - !reference [build, script]
-    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER 'rm -fr ~/pure-external-orgs/*'
+    - sed -i "s/PURE_TEST_URL/$DEV_PURE_TEST_URL/" src/environments/environment*ts
+    - sed -i "s/PURE_TEST_PROXY_URL/$DEV_PURE_TEST_PROXY_URL/" src/environments/environment*ts
+    - sed -i "s/PURE_LIVE_URL/$DEV_PURE_LIVE_URL/" src/environments/environment*ts
+    - sed -i "s/PURE_LIVE_PROXY_URL/$DEV_PURE_LIVE_PROXY_URL/" src/environments/environment*ts
+    - ssh -o stricthostkeychecking=no $DEV_USER@$DEV_SERVER "rm -fr $DEV_SERVER_PATH/*"
     - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $DEV_USER@$DEV_SERVER:~/pure-external-orgs
   only:
     - main
@@ -72,7 +78,7 @@ deploy-dev:
 #     - !reference [.ssh_finish_config, before_script]
 #   script:
 #     - !reference [build, script]
-#     - ssh -o stricthostkeychecking=no $PROD_USER@$PROD_SERVER 'rm -r $PROD_SERVER_PATH/*'
+#     - ssh -o stricthostkeychecking=no $PROD_USER@$PROD_SERVER "rm -r $PROD_SERVER_PATH/*"
 #     - scp -o stricthostkeychecking=no -r ./dist/pure-external-orgs/* $PROD_USER@$PROD_SERVER:$PROD_SERVER_PATH
 #   only:
 #     - tags
