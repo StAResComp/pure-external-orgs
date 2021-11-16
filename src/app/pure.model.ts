@@ -1,3 +1,5 @@
+import { environment } from '../environments/environment';
+
 class InvalidApiKeyError extends Error {
     constructor(m?: string) {
         super(m || "Error: that doesn't look like an API key!");
@@ -28,6 +30,11 @@ export class ApiKey {
 
 }
 
+type Proxy = {
+  target: string,
+  proxy: string
+}
+
 export class Pure {
 
   public url: URL;
@@ -35,13 +42,29 @@ export class Pure {
   public apiPath = '/ws/api';
   public extOrgSearchEndpoint = '/external-organizations/search';
   public extOrgMergeEndpoint = '/external-organizations/merge';
+  private proxies: Array<Proxy> = [
+    {
+      target: environment.pureTestUrl,
+      proxy: environment.pureTestProxyUrl
+    },
+    {
+      target: environment.pureLiveUrl,
+      proxy: environment.pureLiveProxyUrl
+    }
+  ];
 
   public constructor(
     apiKey: string,
-    urlStr = ''
+    urlStr: string
   ) {
     try {
-      this.url = new URL(urlStr || 'https://riswebtest.st-andrews.ac.uk');
+      const proxy = this.proxies.find(p => p.target === urlStr.trim());
+      if (proxy) {
+        this.url = new URL(proxy.proxy);
+      }
+      else{
+        this.url = new URL(urlStr);
+      }
       this.apiKey = new ApiKey(apiKey);
     }
     catch (e) {
@@ -51,13 +74,13 @@ export class Pure {
 
   public get extOrgSearchUrl() {
     const url = this.url;
-    url.pathname = this.apiPath + this.extOrgSearchEndpoint;
+    url.pathname = url.pathname + this.apiPath + this.extOrgSearchEndpoint;
     return url;
   }
 
   public get extOrgMergeUrl() {
     const url = this.url;
-    url.pathname = this.apiPath + this.extOrgMergeEndpoint;
+    url.pathname = url.pathname + this.apiPath + this.extOrgMergeEndpoint;
     return url;
   }
 }

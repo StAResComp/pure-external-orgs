@@ -1,0 +1,7 @@
+export const environment = {
+  production: true,
+  pureTestUrl: 'PURE_TEST_URL',
+  pureTestProxyUrl: 'PURE_TEST_PROXY_URL',
+  pureLiveUrl: 'PURE_LIVE_URL',
+  pureLiveProxyUrl: 'PURE_LIVE_PROXY_URL'
+};
