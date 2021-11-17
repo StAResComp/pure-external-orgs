@@ -5,7 +5,7 @@
 A tool for merging duplicated External Organizations in Elsevier Pure using the
 new write API.
 
-## Use
+## Use
 
 Enter the (base) URL for your Pure instance and a valid API key for working
 with External Organizations. Enter your search query and hit the "Search"
