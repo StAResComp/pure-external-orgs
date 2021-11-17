@@ -95,213 +95,31 @@
   </div>
   <div class="modal-body">
     <dl class="list-group">
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.pureId, dtname: "Pure ID"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.uuid, dtname: "UUID"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.createdBy, dtname: "Created By"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.createdDate, dtname: "Created Date"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.modifiedBy, dtname: "Modified By"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.modifiedDate, dtname: "Modified Date"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.externallyManaged, dtname: "Externally Managed"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.version, dtname: "Version"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.portalUrl, dtname: "Portal URL"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.prettyUrlIdentifiers, dtname: "Pretty URL Identifiers"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.previousUuids, dtname: "Previous UUIDs"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.name?.en_GB, dtname: "Name"}'></ng-container>
-      <div *ngIf="focusOrg?.type" class="list-group-item">
-        <dt>Type</dt>
-        <dd>
-          <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: focusOrg?.type}'></ng-container>
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.natureTypes" class="list-group-item">
-        <dt>Nature Types</dt>
-        <dd *ngFor="let type of focusOrg?.natureTypes">
-          <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: type}'></ng-container>
-        </dd>
-      </div>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.acronym, dtname: "Acronym"}'></ng-container>
-      <div *ngIf="focusOrg?.alternativeNames" class="list-group-item">
-        <dt>Alternative Names</dt>
-        <dd *ngFor="let name of focusOrg?.alternativeNames">{{ name }}</dd>
-      </div>
-      <div *ngIf="focusOrg?.identifiers" class="list-group-item">
-        <dt>Identifiers</dt>
-        <dd *ngFor="let id of focusOrg?.identifiers">
-          {{ id.typeDiscriminator }}
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.address" class="list-group-item">
-        <dt>Address</dt>
-        <dd>
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.address1, dtname: "Address Line 1"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.address2, dtname: "Address Line 2"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.address3, dtname: "Address Line 3"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.address4, dtname: "Address Line 4"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.address5, dtname: "Address Line 5"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.postalCode, dtname: "Postal Code"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.city, dtname: "City"}'></ng-container>
-            <div *ngIf="focusOrg?.address?.country" class="list-group-item">
-              <dt>Country</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: focusOrg?.address?.country}'></ng-container>
-              </dd>
-            </div>
-            <div *ngIf="focusOrg?.address?.subdivision" class="list-group-item">
-              <dt>Sub-division</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: focusOrg?.address?.subdivision}'></ng-container>
-              </dd>
-            </div>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.state, dtname: "State"}'></ng-container>
-            <div *ngIf="focusOrg?.address?.geoLocation" class="list-group-item">
-              <dt>Geolocation</dt>
-              <dd>
-                <dl class="list-group">
-                  <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.geoLocation?.point, dtname: "Point"}'></ng-container>
-                  <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.geoLocation?.polygon, dtname: "Polygon"}'></ng-container>
-                  <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.address?.geoLocation?.calculatedPoint, dtname: "Calculated Point"}'></ng-container>
-                </dl>
-              </dd>
-            </div>
-          </dl>
-        </dd>
-      </div>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.phoneNumber, dtname: "Phone Number"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.mobilePhoneNumber, dtname: "Mobile Phone Number"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.fax, dtname: "Fax"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.email, dtname: "Email"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.bankAccountNumber, dtname: "Bank Account Number"}'></ng-container>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.vatNumber, dtname: "VAT Number"}'></ng-container>
-      <div *ngIf="focusOrg?.documents" class="list-group-item">
-        <dt>Documents</dt>
-        <dd *ngFor="let doc of focusOrg?.documents">
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.pureId, dtname: "Pure ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.fileId, dtname: "File ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.fileName, dtname: "File Name"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.mimeType, dtname: "MIME Type"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.size, dtname: "Size"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.url, dtname: "URL"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.title, dtname: "Title"}'></ng-container>
-            <div *ngIf="doc.type" class="list-group-item">
-              <dt>Type</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: doc.type}'></ng-container>
-              </dd>
-            </div>
-            <div *ngIf="doc.license" class="list-group-item">
-              <dt>License</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: doc.license}'></ng-container>
-              </dd>
-            </div>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.visibleOnPortalDate, dtname: "Visible on Portal Date"}'></ng-container>
-            <div *ngIf="doc.visibility" class="list-group-item">
-              <dt>Visibility</dt>
-              <dd>
-                <dl class="list-group">
-                  <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.visibility?.key, dtname: "Key"}'></ng-container>
-                  <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.visibility?.description?.en_GB, dtname: "Description"}'></ng-container>
-                </dl>
-              </dd>
-            </div>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.creator, dtname: "Creator"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: doc.created, dtname: "Created"}'></ng-container>
-          </dl>
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.images" class="list-group-item">
-        <dt>Images</dt>
-        <dd *ngFor="let image of focusOrg?.images">
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.pureId, dtname: "Pure ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.fileId, dtname: "File ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.fileName, dtname: "File Name"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.mimeType, dtname: "MIME Type"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.size, dtname: "Size"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: image.url, dtname: "URL"}'></ng-container>
-            <div *ngIf="image.type" class="list-group-item">
-              <dt>Type</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: image.type}'></ng-container>
-              </dd>
-            </div>
-          </dl>
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.links" class="list-group-item">
-        <dt>Links</dt>
-        <dd *ngFor="let link of focusOrg?.links">
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: link.pureId, dtname: "Pure ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: link.url, dtname: "URL"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: link.description?.en_GB, dtname: "Description"}'></ng-container>
-            <div *ngIf="link.linkType" class="list-group-item">
-              <dt>Type</dt>
-              <dd>
-                <ng-container [ngTemplateOutlet]='uriRefsTermList' [ngTemplateOutletContext]='{ent: link.linkType}'></ng-container>
-              </dd>
-            </div>
-          </dl>
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.keywordGroups" class="list-group-item">
-        <dt>Keyword Groups</dt>
-        <dd *ngFor="let keywordGroup of focusOrg?.keywordGroups">
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: keywordGroup.pureId, dtname: "Pure ID"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: keywordGroup.typeDiscriminator, dtname: "Type Discriminator"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: keywordGroup.logicalName, dtname: "Logical Name"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: keywordGroup.name?.en_GB, dtname: "Name"}'></ng-container>
-          </dl>
-        </dd>
-      </div>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.note, dtname: "Note"}'></ng-container>
-      <div *ngIf="focusOrg?.visibility" class="list-group-item">
-        <dt>Visibility</dt>
-        <dd>
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.visibility?.key, dtname: "Key"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.visibility?.description?.en_GB, dtname: "Description"}'></ng-container>
-          </dl>
-        </dd>
-      </div>
-      <div *ngIf="focusOrg?.workflow" class="list-group-item">
-        <dt>Type</dt>
-        <dd>
-          <dl class="list-group">
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.workflow?.step, dtname: "Step"}'></ng-container>
-            <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.workflow?.description?.en_GB, dtname: "Description"}'></ng-container>
-          </dl>
-        </dd>
-      </div>
-      <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: focusOrg?.systemName, dtname: "System Name"}'></ng-container>
+      <ng-container *ngFor="let prop of focusOrg | keyvalue" [ngTemplateOutlet]='orgDetailsRecursive' [ngTemplateOutletContext]='{key: prop.key, value: prop.value}'></ng-container>
     </dl>
   </div>
 </ng-template>
 
-<ng-template #dlEntry let-ddval='ddval' let-dtname='dtname'>
-  <div *ngIf="ddval" class="list-group-item">
-    <dt>{{ dtname }}</dt>
-    <dd>{{ ddval }}</dd>
+<ng-template #orgDetailsRecursive let-key="key" let-value="value">
+  <div *ngIf="!key">
+    <dd>{{ value }}</dd>
   </div>
-</ng-template>
-
-<ng-template #uriRefsTermList let-ent='ent'>
-  <dl class="list-group">
-    <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: ent.uri, dtname: "URI"}'></ng-container>
-    <div *ngIf="ent.link" class="list-group-item">
-      <dt>Link</dt>
-      <dd>
-        <dl class="list-group">
-          <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: ent.link?.ref, dtname: "Ref"}'></ng-container>
-          <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: ent.link?.href, dtname: "HRef"}'></ng-container>
-        </dl>
-      </dd>
-    </div>
-    <ng-container [ngTemplateOutlet]='dlEntry' [ngTemplateOutletContext]='{ddval: ent.term?.en_GB, dtname: "Term"}'></ng-container>
-  </dl>
+  <div *ngIf="key && isSimple(value)" class="list-group-item">
+    <dt>{{ key | camelspace | titlecase }}</dt>
+    <dd>{{ value }}</dd>
+  </div>
+  <div *ngIf="key && !isSimple(value) && isArray(value)" class="list-group-item">
+    <dt>{{ key | camelspace | titlecase }}</dt>
+    <ng-container *ngFor="let prop of value" [ngTemplateOutlet]='orgDetailsRecursive' [ngTemplateOutletContext]='{key: false, value: prop}'></ng-container>
+  </div>
+  <div *ngIf="key && !isSimple(value) && !isArray(value)" class="list-group-item">
+    <dt>{{ key | camelspace | titlecase }}</dt>
+    <dd>
+      <dl class="list-group">
+        <ng-container *ngFor="let prop of value | keyvalue" [ngTemplateOutlet]='orgDetailsRecursive' [ngTemplateOutletContext]='{key: prop.key, value: prop.value}'></ng-container>
+      </dl>
+    </dd>
+  </div>
 </ng-template>
 
 <ng-template #mergeModal let-modal>

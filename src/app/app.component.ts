@@ -1,4 +1,4 @@
-import { Component, Injectable, TemplateRef } from '@angular/core';
+import { Component, Injectable, TemplateRef, Pipe, PipeTransform } from '@angular/core';
 import { Pure, ExternalOrganization } from './pure.model';
 import { PureService } from './pure.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -133,5 +133,16 @@ export class AppComponent {
   public orgsToMergeDetails() {
     if (this.results) {
       return this.results.filter(res => this.orgsToMerge.indexOf(res.uuid) > -1);
-    } return undefined; }
+    }
+    return undefined;
+  }
+
+  isSimple(value: any) {
+    return (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean');
+  }
+
+  isArray(value: any) {
+    return Array.isArray(value);
+  }
 }
+
