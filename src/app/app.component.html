@@ -5,8 +5,8 @@
   <ngb-alert *ngIf='success' type="success" (closed)="closeSuccessAlert()">
     {{ success  }}
   </ngb-alert>
-  <ngb-alert *ngIf='error' type="danger" (closed)="closeErrorAlert()">
-    {{ error  }}
+  <ngb-alert *ngIf='error.length > 0' type="danger" (closed)="closeErrorAlert()">
+    <p *ngFor='let e of error'>{{ e }}</p>
   </ngb-alert>
 
   <form (ngSubmit)="search()">

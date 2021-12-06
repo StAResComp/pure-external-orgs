@@ -26,7 +26,7 @@ export class AppComponent {
   public loading = false;
   public merging = false;
   public success = '';
-  public error = '';
+  public error: Array<string> = [];
 
   constructor(
     private pureService: PureService,
@@ -47,13 +47,15 @@ export class AppComponent {
             this.loading = false;
           },
           (error) => {
-            this.error = error.message;
+            this.error.push(error.name);
+            this.error.push(error.message);
+            this.error.push(error.error.detail);
             this.loading = false;
           }
         );
       }
       catch (e) {
-        this.error = (e as Error).message;
+        this.error.push((e as Error).message);
         this.loading = false;
       }
     }
@@ -103,7 +105,9 @@ export class AppComponent {
           this.search();
         },
         (error) => {
-          this.error = error.message;
+          this.error.push(error.name);
+          this.error.push(error.message);
+          this.error.push(error.error.detail);
           this.merging = false;
         }
       );
@@ -115,7 +119,7 @@ export class AppComponent {
   }
 
   public closeErrorAlert() {
-    this.error = '';
+    this.error = [];
   }
 
   public clearSelection() {
