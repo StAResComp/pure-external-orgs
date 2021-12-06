@@ -39,7 +39,7 @@ export class Pure {
 
   public url: URL;
   public apiKey: ApiKey;
-  public apiPath = '/ws/api';
+  public apiPath = 'ws/api';
   public extOrgSearchEndpoint = '/external-organizations/search';
   public extOrgMergeEndpoint = '/external-organizations/merge';
   private proxies: Array<Proxy> = [
@@ -74,14 +74,22 @@ export class Pure {
 
   public get extOrgSearchUrl() {
     const url = this.url;
-    url.pathname = url.pathname + this.apiPath + this.extOrgSearchEndpoint;
+    url.pathname = Pure.createPath(url.pathname, this.apiPath, this.extOrgSearchEndpoint);
     return url;
   }
 
   public get extOrgMergeUrl() {
     const url = this.url;
-    url.pathname = url.pathname + this.apiPath + this.extOrgMergeEndpoint;
+    url.pathname = Pure.createPath(url.pathname, this.apiPath, this.extOrgMergeEndpoint);
     return url;
+  }
+
+  private static createPath(...parts: string[]) {
+    const strippedParts: string[] = [];
+    for (const p of parts) {
+      strippedParts.push(p.replace(/^\/|\/$/g, ''));
+    }
+    return '/' + strippedParts.join('/');
   }
 }
 

@@ -47,7 +47,7 @@ export class AppComponent {
             this.loading = false;
           },
           (error) => {
-            this.error = error;
+            this.error = error.message;
             this.loading = false;
           }
         );
@@ -103,7 +103,7 @@ export class AppComponent {
           this.search();
         },
         (error) => {
-          this.error = error;
+          this.error = error.message;
         }
       );
     }
