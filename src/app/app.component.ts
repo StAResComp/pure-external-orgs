@@ -104,6 +104,7 @@ export class AppComponent {
         },
         (error) => {
           this.error = error.message;
+          this.merging = false;
         }
       );
     }
